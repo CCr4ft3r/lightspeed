@@ -76,6 +76,5 @@ public abstract class DefaultClientPackResourcesMixin implements IPackResources 
         CacheUtil.persist(existenceByServerResource, new File(HAS_RESOURCE_CACHE_DIR.getPath(), id + "-server.ser"));
         existenceByClientResource.clear();
         existenceByServerResource.clear();
-        getExistenceByResource().clear();
     }
 }

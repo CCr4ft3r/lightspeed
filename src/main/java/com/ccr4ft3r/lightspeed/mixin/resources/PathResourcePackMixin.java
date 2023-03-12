@@ -96,7 +96,8 @@ public abstract class PathResourcePackMixin implements IPathResourcePack, IPackR
     public void getNamespacesReturnInjected(PackType type, CallbackInfoReturnable<Set<String>> cir) {
         if (!GlobalCache.isEnabled)
             return;
-        cacheNamespaces(type, cir.getReturnValue());
+        if (GlobalCache.shouldCacheEmptyNamespaces || cir.getReturnValue() != null && !cir.getReturnValue().isEmpty())
+            cacheNamespaces(type, cir.getReturnValue());
     }
 
     @Inject(method = "hasResource(Ljava/lang/String;)Z", at = @At("HEAD"), cancellable = true)
