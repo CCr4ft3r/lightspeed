@@ -8,7 +8,7 @@ import com.google.common.collect.Maps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraftforge.forgespi.locating.IModFile;
-import net.minecraftforge.resource.PathResourcePack;
+import net.minecraftforge.resource.PathPackResources;
 import org.apache.commons.io.FilenameUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 
 import static com.ccr4ft3r.lightspeed.util.CacheUtil.*;
 
-@Mixin(value = PathResourcePack.class)
+@Mixin(value = PathPackResources.class)
 public abstract class PathResourcePackMixin implements IPathResourcePack, IPackResources {
 
     private final Map<String, Path> resolvedPathByResource = Maps.newConcurrentMap();
@@ -117,7 +117,7 @@ public abstract class PathResourcePackMixin implements IPathResourcePack, IPackR
     }
 
     @Inject(method = "getResources", at = @At(value = "INVOKE", target = "Ljava/nio/file/Path;getFileSystem()Ljava/nio/file/FileSystem;"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
-    public synchronized void getResourcesInjected(PackType type, String resourceNamespace, String pathIn, int maxDepth, Predicate<String> filter, CallbackInfoReturnable<Collection<ResourceLocation>> cir, Path root) {
+    public synchronized void getResourcesInjected(PackType type, String resourceNamespace, String pathIn, Predicate<ResourceLocation> filter, CallbackInfoReturnable<Collection<ResourceLocation>> cir, Path root) {
         if (!GlobalCache.isEnabled)
             return;
         String resource = root.toString();

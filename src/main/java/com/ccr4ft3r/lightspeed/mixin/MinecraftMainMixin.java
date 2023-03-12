@@ -17,8 +17,8 @@ import static com.ccr4ft3r.lightspeed.util.CacheUtil.*;
 @Mixin(Main.class)
 public class MinecraftMainMixin {
 
-    @Inject(method = "main", at = @At(value = "INVOKE", target = "Lnet/minecraft/SharedConstants;tryDetectVersion()V", shift = At.Shift.AFTER))
-    private static void mainTryDetecVersionInjected(String[] p_129642_, CallbackInfo ci) {
+    @Inject(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/SharedConstants;tryDetectVersion()V", shift = At.Shift.AFTER))
+    private static void mainTryDetecVersionInjected(String[] p_239873_, boolean p_239874_, CallbackInfo ci) {
         GlobalCache.EXECUTOR.execute(() -> {
             loadPersistedCaches(HAS_RESOURCE_CACHE_DIR, GlobalCache.PERSISTED_EXISTENCES_BY_MOD);
             loadPersistedCaches(NAMESPACE_CACHE_DIR, GlobalCache.PERSISTED_NAMESPACES_BY_MOD);

@@ -24,7 +24,7 @@ public class TitleScreenInjector {
 
     @SuppressWarnings({"InstantiationOfUtilityClass", "unchecked"})
     @SubscribeEvent
-    public static void onScreenInit(ScreenEvent.InitScreenEvent event) {
+    public static void onScreenInit(ScreenEvent.Init event) {
         if (!(event.getScreen() instanceof TitleScreen) || launchComplete)
             return;
         launchComplete = true;
