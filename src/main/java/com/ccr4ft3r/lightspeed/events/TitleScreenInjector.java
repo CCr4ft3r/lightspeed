@@ -2,13 +2,13 @@ package com.ccr4ft3r.lightspeed.events;
 
 import com.ccr4ft3r.lightspeed.ModConstants;
 import com.ccr4ft3r.lightspeed.cache.GlobalCache;
-import com.mojang.logging.LogUtils;
-import net.minecraft.client.gui.screens.TitleScreen;
+import com.ccr4ft3r.lightspeed.util.LogUtils;
+import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.BrandingControl;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.internal.BrandingControl;
 
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
@@ -24,8 +24,8 @@ public class TitleScreenInjector {
 
     @SuppressWarnings({"InstantiationOfUtilityClass", "unchecked"})
     @SubscribeEvent
-    public static void onScreenInit(ScreenEvent.InitScreenEvent event) {
-        if (!(event.getScreen() instanceof TitleScreen) || launchComplete)
+    public static void onScreenInit(GuiScreenEvent.InitGuiEvent event) {
+        if (!(event.getGui() instanceof MainMenuScreen) || launchComplete)
             return;
         launchComplete = true;
         try {

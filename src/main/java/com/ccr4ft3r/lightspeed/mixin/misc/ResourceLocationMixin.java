@@ -1,7 +1,7 @@
 package com.ccr4ft3r.lightspeed.mixin.misc;
 
 import com.ccr4ft3r.lightspeed.cache.GlobalCache;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

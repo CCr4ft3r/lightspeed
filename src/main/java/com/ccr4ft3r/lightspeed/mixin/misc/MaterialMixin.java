@@ -1,13 +1,13 @@
 package com.ccr4ft3r.lightspeed.mixin.misc;
 
 import com.ccr4ft3r.lightspeed.cache.GlobalCache;
-import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.renderer.model.RenderMaterial;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Material.class)
+@Mixin(RenderMaterial.class)
 public abstract class MaterialMixin {
 
     private Integer hash;

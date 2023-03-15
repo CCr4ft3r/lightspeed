@@ -4,7 +4,7 @@ import com.ccr4ft3r.lightspeed.interfaces.ICache;
 import com.ccr4ft3r.lightspeed.util.CacheUtil;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.mojang.bridge.game.PackType;
+import net.minecraft.resources.ResourcePackType;
 
 import java.io.File;
 import java.util.List;
@@ -24,7 +24,7 @@ public class GlobalCache {
     public static final Map<String, String> CANONICAL_PATH_PER_FILE = Maps.newConcurrentMap();
     private static final Set<ICache> CACHES = Sets.newConcurrentHashSet();
     public static final Map<String, Map<String, Boolean>> PERSISTED_EXISTENCES_BY_MOD = Maps.newConcurrentMap();
-    public static final Map<String, Map<PackType, Set<String>>> PERSISTED_NAMESPACES_BY_MOD = Maps.newConcurrentMap();
+    public static final Map<String, Map<ResourcePackType, Set<String>>> PERSISTED_NAMESPACES_BY_MOD = Maps.newConcurrentMap();
     public static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
 
     public static void add(ICache cache) {

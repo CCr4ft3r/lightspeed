@@ -3,9 +3,9 @@ package com.ccr4ft3r.lightspeed.mixin.resources;
 import com.ccr4ft3r.lightspeed.cache.GlobalCache;
 import com.ccr4ft3r.lightspeed.interfaces.IPackResources;
 import com.google.common.collect.Maps;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.FilePackResources;
-import net.minecraft.server.packs.PackType;
+import net.minecraft.resources.FilePack;
+import net.minecraft.resources.ResourcePackType;
+import net.minecraft.util.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-@Mixin(FilePackResources.class)
+@Mixin(FilePack.class)
 public abstract class FilePackResourcesMixin implements IPackResources {
 
-    private final Map<PackType, List<ZipEntry>> entriesByPackType = Maps.newConcurrentMap();
+    private final Map<ResourcePackType, List<ZipEntry>> entriesByPackType = Maps.newConcurrentMap();
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void initReturnInjected(File p_10236_, CallbackInfo ci) {
@@ -35,7 +35,7 @@ public abstract class FilePackResourcesMixin implements IPackResources {
     }
 
     @Inject(method = "getResources", at = @At(value = "INVOKE", target = "Ljava/util/zip/ZipFile;entries()Ljava/util/Enumeration;", shift = At.Shift.BEFORE), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-    public void getResourcesHeadInjected(PackType packType, String pathIn, String pathIn2, int maxDepth, Predicate<String> filter, CallbackInfoReturnable<Collection<ResourceLocation>> cir, ZipFile zip) {
+    public void getResourcesHeadInjected(ResourcePackType packType, String pathIn, String pathIn2, int maxDepth, Predicate<String> filter, CallbackInfoReturnable<Collection<ResourceLocation>> cir, ZipFile zip) {
         if (!GlobalCache.isEnabled)
             return;
         String base = packType.getDirectory() + "/" + pathIn + "/";

@@ -2,8 +2,8 @@ package com.ccr4ft3r.lightspeed.mixin.misc;
 
 import com.ccr4ft3r.lightspeed.cache.GlobalCache;
 import com.ccr4ft3r.lightspeed.interfaces.ICache;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.state.Property;
+import net.minecraft.state.StateContainer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,19 +14,19 @@ import java.util.Map;
 import java.util.function.Function;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
-@Mixin(StateDefinition.class)
+@Mixin(StateContainer.class)
 public class StateDefinitonMixin implements ICache {
 
     private Map<String, Property<?>> propsByName;
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    public void initReturnInjected(Function p_61052_, Object p_61053_, StateDefinition.Factory p_61054_, Map p_61055_, CallbackInfo ci) {
+    public void initReturnInjected(Function p_61052_, Object p_61053_, StateContainer.IFactory p_61054_, Map p_61055_, CallbackInfo ci) {
         if (GlobalCache.isEnabled)
             GlobalCache.add(this);
     }
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    private void initHeadInjected(Function p_61052_, Object p_61053_, StateDefinition.Factory p_61054_, Map p_61055_, CallbackInfo ci) {
+    private void initHeadInjected(Function p_61052_, Object p_61053_, StateContainer.IFactory p_61054_, Map p_61055_, CallbackInfo ci) {
         if (GlobalCache.isEnabled)
             propsByName = p_61055_;
     }

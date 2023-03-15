@@ -1,8 +1,7 @@
 package com.ccr4ft3r.lightspeed.util;
 
 import com.google.common.collect.Maps;
-import com.mojang.logging.LogUtils;
-import net.minecraft.SharedConstants;
+import net.minecraft.util.SharedConstants;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.*;

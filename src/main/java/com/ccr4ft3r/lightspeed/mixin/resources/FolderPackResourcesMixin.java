@@ -1,7 +1,7 @@
 package com.ccr4ft3r.lightspeed.mixin.resources;
 
 import com.ccr4ft3r.lightspeed.cache.GlobalCache;
-import net.minecraft.server.packs.FolderPackResources;
+import net.minecraft.resources.FolderPack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static com.ccr4ft3r.lightspeed.cache.GlobalCache.*;
 
-@Mixin(FolderPackResources.class)
+@Mixin(FolderPack.class)
 public abstract class FolderPackResourcesMixin {
 
     @Redirect(method = "validatePath", at = @At(value = "INVOKE", target = "Ljava/io/File;getCanonicalPath()Ljava/lang/String;"))

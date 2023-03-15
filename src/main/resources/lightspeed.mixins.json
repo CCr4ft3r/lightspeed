@@ -1,13 +1,14 @@
 {
   "required": true,
   "package": "com.ccr4ft3r.lightspeed.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_8",
   "refmap": "lightspeed.refmap.json",
   "client": [
     "MinecraftMainMixin",
     "misc.KeyValueConditionMixin",
     "misc.MaterialMixin",
     "misc.SelectorMixin",
+    "misc.WeightedBakedModelBuilderMixin",
     "model.BlockModelMixin",
     "model.MultiPartMixin",
     "model.MultivariantMixin",
@@ -15,7 +16,6 @@
   ],
   "mixins": [
     "misc.ResourceLocationMixin",
-    "misc.ResourcePackLoaderMixin",
     "misc.StateDefinitonMixin",
     "model.ModelBakeryMixin",
     "resources.AbstractPackResourcesMixin",
