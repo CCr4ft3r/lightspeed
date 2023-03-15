@@ -34,7 +34,7 @@ public abstract class FilePackResourcesMixin implements IPackResources {
             GlobalCache.add(this);
     }
 
-    @Inject(method = "getResources", at = @At(value = "INVOKE",target = "Ljava/util/zip/ZipFile;entries()Ljava/util/Enumeration;",shift = At.Shift.BEFORE), cancellable = true,locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "getResources", at = @At(value = "INVOKE", target = "Ljava/util/zip/ZipFile;entries()Ljava/util/Enumeration;", shift = At.Shift.BEFORE), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     public void getResourcesHeadInjected(PackType packType, String pathIn, String pathIn2, int maxDepth, Predicate<String> filter, CallbackInfoReturnable<Collection<ResourceLocation>> cir, ZipFile zip) {
         if (!GlobalCache.isEnabled)
             return;
@@ -43,18 +43,18 @@ public abstract class FilePackResourcesMixin implements IPackResources {
         List<ZipEntry> entries;
         if ((entries = entriesByPackType.get(packType)) == null) {
             entries = zip.stream().filter(e -> !e.isDirectory()).filter(
-                e -> !e.getName().endsWith(".mcmeta") && e.getName().startsWith(path)
+                e -> !e.getName().endsWith(".mcmeta")
             ).collect(Collectors.toList());
             entriesByPackType.put(packType, entries);
         }
-        cir.setReturnValue(entries.stream().map(e -> {
+        cir.setReturnValue(entries.stream().filter(e -> e.getName().startsWith(path)).map(e -> {
             String locPath = e.getName().substring(base.length());
             String[] splitted = locPath.split("/");
             if (splitted.length >= maxDepth + 1 && filter.test(splitted[splitted.length - 1])) {
                 return new ResourceLocation(pathIn, locPath);
             }
             return null;
-        }).filter(Objects::nonNull).collect(Collectors.toSet()));
+        }).filter(Objects::nonNull).collect(Collectors.toList()));
     }
 
     @Override
