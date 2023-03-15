@@ -26,7 +26,7 @@ import java.util.zip.ZipFile;
 @Mixin(FilePackResources.class)
 public abstract class FilePackResourcesMixin implements IPackResources {
 
-    private final Map<PackType, List<ZipEntry>> entriesByPackType = Maps.newConcurrentMap();
+    private final  Map<PackType, List<ZipEntry>> entriesByPackType = Maps.newConcurrentMap();
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void initReturnInjected(File p_10236_, CallbackInfo ci) {
@@ -43,18 +43,18 @@ public abstract class FilePackResourcesMixin implements IPackResources {
         List<ZipEntry> entries;
         if ((entries = entriesByPackType.get(packType)) == null) {
             entries = zip.stream().filter(e -> !e.isDirectory()).filter(
-                e -> !e.getName().endsWith(".mcmeta") && e.getName().startsWith(path)
+                e -> !e.getName().endsWith(".mcmeta")
             ).collect(Collectors.toList());
             entriesByPackType.put(packType, entries);
         }
-        cir.setReturnValue(entries.stream().map(e -> {
+        cir.setReturnValue(entries.stream().filter(e -> e.getName().startsWith(path)).map(e -> {
             String locPath = e.getName().substring(base.length());
             ResourceLocation resourcelocation = ResourceLocation.tryBuild(pathIn, locPath);
             if (resourcelocation != null && filter.test(resourcelocation)) {
-                return new ResourceLocation(pathIn, locPath);
+                return resourcelocation;
             }
             return null;
-        }).filter(Objects::nonNull).collect(Collectors.toSet()));
+        }).filter(Objects::nonNull).collect(Collectors.toList()));
     }
 
     @Override
