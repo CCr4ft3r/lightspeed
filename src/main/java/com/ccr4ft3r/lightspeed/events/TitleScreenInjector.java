@@ -6,6 +6,7 @@ import com.ccr4ft3r.lightspeed.util.LogUtils;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.BrandingControl;
 import net.minecraftforge.fml.common.Mod;
@@ -23,8 +24,8 @@ public class TitleScreenInjector {
     private static boolean launchComplete = false;
 
     @SuppressWarnings({"InstantiationOfUtilityClass", "unchecked"})
-    @SubscribeEvent
-    public static void onScreenInit(GuiScreenEvent.InitGuiEvent event) {
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onScreenInit(GuiScreenEvent.InitGuiEvent.Post event) {
         if (!(event.getGui() instanceof MainMenuScreen) || launchComplete)
             return;
         launchComplete = true;
@@ -40,9 +41,11 @@ public class TitleScreenInjector {
             computeBranding.invoke(null);
 
             List<String> brandings = new ArrayList<>((List<String>) f.get(brandingControl));
-            List<String> newBrandings = new ArrayList<>(brandings);
-            f.set(brandingControl, newBrandings);
-            newBrandings.add("Lightspeed: Launch took " + secondsToStart + "s");
+            if (brandings.size() > 1) {
+                List<String> newBrandings = new ArrayList<>(brandings);
+                f.set(brandingControl, newBrandings);
+                newBrandings.add("Lightspeed: Launch took " + secondsToStart + "s");
+            }
         } catch (NoSuchFieldException | NoSuchMethodException | IllegalAccessException |
                  InvocationTargetException e) {
             LogUtils.getLogger().error("Cannot add launch time to title screen", e);
