@@ -40,9 +40,11 @@ public class TitleScreenInjector {
             computeBranding.invoke(null);
 
             List<String> brandings = new ArrayList<>((List<String>) f.get(brandingControl));
-            List<String> newBrandings = new ArrayList<>(brandings);
-            f.set(brandingControl, newBrandings);
-            newBrandings.add("Lightspeed: Launch took " + secondsToStart + "s");
+            if (brandings.size() > 1) {
+                List<String> newBrandings = new ArrayList<>(brandings);
+                f.set(brandingControl, newBrandings);
+                newBrandings.add("Lightspeed: Launch took " + secondsToStart + "s");
+            }
         } catch (NoSuchFieldException | NoSuchMethodException | IllegalAccessException |
                  InvocationTargetException e) {
             LogUtils.getLogger().error("Cannot add launch time to title screen", e);
