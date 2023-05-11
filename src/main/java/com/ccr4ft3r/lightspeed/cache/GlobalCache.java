@@ -20,6 +20,7 @@ public class GlobalCache {
     public static Boolean isEnabled = true;
     public static Boolean shouldCacheWalkedPaths = true;
     public static Boolean shouldCacheEmptyNamespaces = true;
+    public static Boolean shouldCacheMaterials = true;
     public static final Map<CharSequence, List<String>> SPLITTED_STRINGS_BY_SEQUENCE = Maps.newConcurrentMap();
     public static final Map<String, String> CANONICAL_PATH_PER_FILE = Maps.newConcurrentMap();
     private static final Set<ICache> CACHES = Sets.newConcurrentHashSet();

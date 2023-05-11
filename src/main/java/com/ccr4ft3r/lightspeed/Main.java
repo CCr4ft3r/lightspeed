@@ -19,5 +19,7 @@ public class Main {
         if (CompatUtil.existsClass("net.minecraftforge.resource.ResourceCacheManager")
             && ResourceCacheManager.shouldUseCache())
             GlobalCache.shouldCacheEmptyNamespaces = false;
+        if (ModList.get().isLoaded(ModConstants.MULTIBLOCKED_ID))
+            GlobalCache.shouldCacheMaterials = false;
     }
 }
