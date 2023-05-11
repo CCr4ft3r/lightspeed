@@ -22,7 +22,7 @@ public abstract class BlockModelMixin {
 
     @Inject(method = "getMaterials", at = @At("HEAD"), cancellable = true)
     public void getMaterialsHeadInjected(Function<ResourceLocation, UnbakedModel> p_111855_, Set<Pair<String, String>> p_111856_, CallbackInfoReturnable<Collection<Material>> cir) {
-        if (GlobalCache.isEnabled && materials != null)
+        if (GlobalCache.isEnabled && materials != null  && GlobalCache.shouldCacheMaterials)
             cir.setReturnValue(materials);
     }
 

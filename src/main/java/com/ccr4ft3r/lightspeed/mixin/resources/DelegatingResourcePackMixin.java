@@ -9,11 +9,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Mixin(DelegatingPackResources.class)
 public abstract class DelegatingResourcePackMixin {
@@ -26,10 +24,5 @@ public abstract class DelegatingResourcePackMixin {
         if (!GlobalCache.isEnabled)
             return;
         cir.setReturnValue(getCandidatePacks(type, location).parallelStream().anyMatch(p -> p.hasResource(type, location)));
-    }
-
-    @Redirect(method = "getResources", at = @At(value = "INVOKE", target = "Ljava/util/List;stream()Ljava/util/stream/Stream;"))
-    public <R> Stream<R> getResourcesStreamRedirected(List<R> instance) {
-        return !GlobalCache.isEnabled ? instance.stream() : instance.parallelStream();
     }
 }
