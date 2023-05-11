@@ -35,7 +35,7 @@ public abstract class MultiPartMixin implements IUnbakedModel {
 
     @Inject(method = "getMaterials", at = @At("HEAD"), cancellable = true)
     public void getMaterialsHeadInjected(Function<ResourceLocation, IUnbakedModel> p_111855_, Set<Pair<String, String>> p_111856_, CallbackInfoReturnable<Collection<RenderMaterial>> cir) {
-        if (GlobalCache.isEnabled && materials != null)
+        if (GlobalCache.isEnabled && materials != null && GlobalCache.shouldCacheMaterials)
             cir.setReturnValue(materials);
     }
 
