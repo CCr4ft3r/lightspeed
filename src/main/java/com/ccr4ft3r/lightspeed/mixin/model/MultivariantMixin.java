@@ -49,20 +49,4 @@ public abstract class MultivariantMixin implements IUnbakedModel {
             dependencies = cir.getReturnValue();
     }
 
-    @Inject(method = "bake", at = @At("HEAD"), cancellable = true)
-    public void bakeHeadInjected(ModelBakery p_111850_, Function<RenderMaterial, TextureAtlasSprite> p_111851_, IModelTransform p_111852_, ResourceLocation p_111853_, CallbackInfoReturnable<IBakedModel> cir) {
-        if (!GlobalCache.isEnabled) {
-            return;
-        }
-        if (this.getVariants().isEmpty()) {
-            cir.setReturnValue(null);
-        } else {
-            WeightedBakedModel.Builder weightedBuilder = new WeightedBakedModel.Builder();
-            //noinspection CodeBlock2Expr
-            this.getVariants().parallelStream().forEach(variant -> {
-                weightedBuilder.add(p_111850_.getBakedModel(variant.getModelLocation(), variant, p_111851_), variant.getWeight());
-            });
-            cir.setReturnValue(weightedBuilder.build());
-        }
-    }
 }
