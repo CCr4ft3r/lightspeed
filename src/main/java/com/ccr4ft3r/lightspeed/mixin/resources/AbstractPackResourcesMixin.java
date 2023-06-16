@@ -4,6 +4,7 @@ import com.ccr4ft3r.lightspeed.cache.GlobalCache;
 import com.ccr4ft3r.lightspeed.interfaces.IPackResources;
 import com.google.common.collect.Maps;
 import net.minecraft.server.packs.AbstractPackResources;
+import net.minecraft.server.packs.FolderPackResources;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,7 +35,7 @@ public abstract class AbstractPackResourcesMixin implements IPackResources {
         if (!GlobalCache.isEnabled)
             return hasResource(s);
         Boolean exists = existenceByResource.get(s);
-        if (exists == null) {
+        if (exists == null || !exists && (IPackResources) this instanceof FolderPackResources) {
             existenceByResource.put(s, exists = hasResource(s));
         }
         return exists;
